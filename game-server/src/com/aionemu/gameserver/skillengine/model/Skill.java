@@ -379,8 +379,10 @@ public class Skill {
 	}
 
 	private int calculateCastDuration() {
-		if (getItemTemplate() != null)
-			return getItemTemplate().getCastingDelay();
+		if (itemTemplate != null) {
+			// If the item has no custom cast time, the cast time is taken from the associated skill.
+			return itemTemplate.getCastingDelay() > 0 ? itemTemplate.getCastingDelay() : baseCastDuration;
+		}
 		//2nd+ time of multicast-skill activation
 		if (getMultiCastCount() > 0)
 			return 0;
